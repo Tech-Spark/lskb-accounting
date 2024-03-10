@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { email, password, username } = reqBody;
-    console.log(reqBody);
     const user = await User.findOne({ email });
 
     // checking if the user exist
@@ -31,33 +30,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // comparing the password
+    if (
+      user.branchName === 'kapelanka' ||
+      user.branchName === 'balicka' ||
+      user.branchName === 'bulwar'
+    ) {
+      // comparing the password
+      const validPassword = await bcryptjs.compare(password, user.password);
+      if (!validPassword) {
+        return NextResponse.json(
+          { error: 'Invalid password' },
+          { status: 404 }
+        );
+      }
 
-    const validPassword = await bcryptjs.compare(password, user.password);
+      // creating a token data
+      const tokenData = {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      };
+      // creat token
+      const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
+        expiresIn: '2h',
+      });
 
-    if (!validPassword) {
-      return NextResponse.json({ error: 'Invalid password' }, { status: 404 });
+      const response = NextResponse.json({
+        message: 'Login successful',
+        success: true,
+      });
+      response.cookies.set('token', token, {
+        httpOnly: true,
+      });
+      return response;
+    } else {
+      return NextResponse.json(
+        { error: 'Branch-name did not match' },
+        { status: 404 }
+      );
     }
-
-    // creating a token data
-    const tokenData = {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-    };
-    // creat token
-    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
-      expiresIn: '1d',
-    });
-
-    const response = NextResponse.json({
-      message: 'Login successful',
-      success: true,
-    });
-    response.cookies.set('token', token, {
-      httpOnly: true,
-    });
-    return response;
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
   }

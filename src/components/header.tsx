@@ -1,17 +1,45 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import MenuWindow from '@/components/menuWindow';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import UserContext from '@/store/userContext';
 
 export default function Header() {
-  const [showWin, setShowWin] = React.useState(false);
+  const [showWin, setShowWin] = useState(false);
+  const [logoutTrue, setLogoutTrue] = useState(false);
+  const { loginUser, setLoginUser, setUserId }: any = useContext(UserContext);
 
   const showProf = () => {
     setShowWin(!showWin);
   };
+
+  const router = useRouter();
+  const signout = async () => {
+    try {
+      const res = await Axios.get('/api/users/logout');
+      const logoutSuccess = res.data.success;
+      if (logoutSuccess) {
+        setLoginUser('');
+        setUserId('');
+        toast.success('Logout successful');
+        setLogoutTrue(logoutSuccess);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (logoutTrue) {
+      router.push('/');
+    }
+  }, [router, logoutTrue]);
 
   return (
     <div>
@@ -25,21 +53,61 @@ export default function Header() {
               </Link>
             </div>
             <div>
-              <div className="fontAwesome-size flex">
-                <Link href="/dashboard" className="hover:text-amber-500">
-                  Dashboard
-                </Link>
-                <Link href="/signup" className="hover:text-amber-500">
-                  Register
-                </Link>{' '}
-                <Link
-                  href="#"
+              <ul className="fontAwesome-size flex">
+                {loginUser ? (
+                  <li>
+                    <Link href="/dashboard" className="hover:text-amber-500">
+                      Dashboard
+                    </Link>
+                  </li>
+                ) : (
+                  <li>{''}</li>
+                )}
+
+                {loginUser ? (
+                  <li>
+                    <p>Hello! {loginUser} </p>
+                  </li>
+                ) : (
+                  <li>
+                    <Link href="/signup" className="hover:text-amber-500">
+                      Register
+                    </Link>
+                  </li>
+                )}
+                {loginUser ? (
+                  <li>
+                    <div
+                      className="hover:text-amber-500 cursor-pointer"
+                      onClick={signout}
+                    >
+                      Logout
+                    </div>
+                  </li>
+                ) : (
+                  <li>
+                    <Link href="/login" className="hover:text-amber-500">
+                      Login
+                    </Link>
+                  </li>
+                )}
+
+                {/* <Link
+                  href="/dashboard/profile"
                   className="hover:text-amber-500"
-                  onClick={showProf}
                 >
-                  M<FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
-                </Link>
-              </div>
+                  profile
+                </Link> */}
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-amber-500"
+                    onClick={showProf}
+                  >
+                    M<FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

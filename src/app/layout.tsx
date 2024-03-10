@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { Toaster } from 'react-hot-toast';
+import UserContextProvider from '@/store/userContextProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,9 +30,13 @@ export default async function RootLayout({
           }}
         />
         <div className="sections flex min-h-screen flex-col justify-between bg-cyan-950">
-          <Header />
-          <section className="main-section mx-12 lg:mx-24">{children}</section>
-          <Footer />
+          <UserContextProvider>
+            <Header />
+            <section className="main-section mx-12 lg:mx-24">
+              {children}
+            </section>
+            <Footer />
+          </UserContextProvider>
         </div>
       </body>
     </html>

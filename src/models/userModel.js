@@ -25,12 +25,13 @@ const userSchema = new mongoose.Schema({
   },
   branchCode: {
     type: Number,
-    required: [true, 'Please provide branch code'],
-  },
-  pinCode: {
-    type: String,
     required: [true, 'Please provide a branch code'],
   },
+  branchName: {
+    type: String,
+    required: [true, 'please provide branch nane'],
+  },
+  pinCode: String,
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,
   verifyToken: String,
