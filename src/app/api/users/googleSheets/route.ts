@@ -52,8 +52,9 @@ export async function POST(req: NextRequest) {
     (branchName === 'kapelanka' &&
       (Input_by === 'asiqul' || Input_by === 'nasir')) ||
     (branchName === 'balicka' &&
-      (Input_by === 'rokon' || Input_by === 'shoel')) ||
-    (branchName === 'bulwar' && (Input_by === 'iqbal' || Input_by === 'tuhin'))
+      (Input_by === 'rokon' || Input_by === 'shoel' || Input_by === 'nasir')) ||
+    (branchName === 'bulwar' &&
+      (Input_by === 'iqbal' || Input_by === 'tuhin' || Input_by === 'nasir'))
   ) {
     try {
       const auth = new google.auth.GoogleAuth({
@@ -69,12 +70,27 @@ export async function POST(req: NextRequest) {
         auth: auth,
       });
 
-      const opt = {
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      const kapSheet = process.env.GOOGLE_SHEET_ID;
+      const balSheet = process.env.GOOGLE_SHEET_ID_BALICKA;
+      const bulSheet = process.env.GOOGLE_SHEET_ID_BULWAR;
+      const sheetIdentity = () => {
+        if (branchName === 'kapelanka') {
+          return kapSheet;
+        } else if (branchName === 'balicka') {
+          return balSheet;
+        } else if (branchName === 'bulwar') {
+          return bulSheet;
+        } else {
+          return '';
+        }
+      };
+
+      const kapelanka = {
+        spreadsheetId: sheetIdentity(),
         range: `${branchName}!A36:A`,
       };
 
-      let data = await sheets.spreadsheets.values.get(opt);
+      let data = await sheets.spreadsheets.values.get(kapelanka);
       if (!data) {
         return NextResponse.json(
           { message: 'something went wrong!' },
@@ -99,8 +115,8 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      const opt2 = {
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      const kapelanka2 = {
+        spreadsheetId: sheetIdentity(),
         range: `${branchName}!A36:O`,
         valueInputOption: 'USER_ENTERED',
         resource: {
@@ -125,7 +141,7 @@ export async function POST(req: NextRequest) {
           ],
         },
       };
-      let dataWrite = await sheets.spreadsheets.values.append(opt2);
+      let dataWrite = await sheets.spreadsheets.values.append(kapelanka2);
       // here gose the logic
       return NextResponse.json(
         {
