@@ -2,10 +2,10 @@
 import React, { FormEvent, useContext } from 'react';
 import UserContext from '@/store/userContext';
 import Axios from 'axios';
-import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
-function Bulwar() {
+function Wroclaw() {
   const [loading, setLoading] = React.useState(false);
   const { loginUser, branchName }: any = useContext(UserContext);
   const d = new Date();
@@ -73,7 +73,7 @@ function Bulwar() {
         'Loading...'
       ) : (
         <div>
-          <h1 className="m-6 text-2xl">Hasi Kebab Accounting</h1>
+          <h1 className="m-6 text-2xl">Jannat Kebab Accounting</h1>
           <form className="form border-2 p-2" onSubmit={SaveInSheet}>
             <div className="py-2 mb-4 px-1">
               <label className="form-label px-2">Card_machine:</label>
@@ -289,4 +289,4 @@ function Bulwar() {
   );
 }
 
-export default Bulwar;
+export default Wroclaw;

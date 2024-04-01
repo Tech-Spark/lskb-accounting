@@ -2,19 +2,18 @@
 import Popupwindow from '@/components/popupinwindow';
 import UserContext from '@/store/userContext';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 export default function Dashboard() {
-  const { loginUser, pinWin, setPinWin, branchName, setBranchName }: any =
+  const { loginUser, pinWin, setPinWin, setBranchName }: any =
     useContext(UserContext);
 
   function useOnClickOutside(e: any) {
     setPinWin(true);
     let name = e.currentTarget.getAttribute('value');
     setBranchName(name);
-    console.log(pinWin, branchName);
   }
-  function userPin(e: any) {}
+
   return (
     <>
       {loginUser === '' ? (
@@ -50,6 +49,15 @@ export default function Dashboard() {
             >
               <Link href="" className="">
                 Bulwar
+              </Link>
+            </li>
+            <li
+              className="w-60  border-2 border-stone-500 p-2 h-20 text-center mb-5"
+              value="wroclaw"
+              onClick={useOnClickOutside}
+            >
+              <Link href="" className="">
+                Wroclaw
               </Link>
             </li>
           </ul>

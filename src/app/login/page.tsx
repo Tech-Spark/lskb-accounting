@@ -83,7 +83,7 @@ export default function LoginPage() {
             <option value="tuhin">Tuhin</option>
             <option value="shoel">Shoel</option>
             <option value="tarik">Tarik</option>
-            <option value="kabir">Kabir</option>
+            <option value="fazlur">Fazlur</option>
             <option value="nasir">Nasir</option>
           </select>
         </div>

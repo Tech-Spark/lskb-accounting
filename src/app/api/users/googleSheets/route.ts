@@ -53,6 +53,8 @@ export async function POST(req: NextRequest) {
       (Input_by === 'asiqul' || Input_by === 'nasir')) ||
     (branchName === 'balicka' &&
       (Input_by === 'rokon' || Input_by === 'shoel' || Input_by === 'nasir')) ||
+    (branchName === 'wroclaw' &&
+      (Input_by === 'fazlur' || Input_by === 'nasir')) ||
     (branchName === 'bulwar' &&
       (Input_by === 'iqbal' || Input_by === 'tuhin' || Input_by === 'nasir'))
   ) {
@@ -73,6 +75,8 @@ export async function POST(req: NextRequest) {
       const kapSheet = process.env.GOOGLE_SHEET_ID;
       const balSheet = process.env.GOOGLE_SHEET_ID_BALICKA;
       const bulSheet = process.env.GOOGLE_SHEET_ID_BULWAR;
+      const wrocSheet = process.env.GOOGLE_SHEET_ID_WROCLAW;
+
       const sheetIdentity = () => {
         if (branchName === 'kapelanka') {
           return kapSheet;
@@ -80,6 +84,8 @@ export async function POST(req: NextRequest) {
           return balSheet;
         } else if (branchName === 'bulwar') {
           return bulSheet;
+        } else if (branchName === 'wroclaw') {
+          return wrocSheet;
         } else {
           return '';
         }
