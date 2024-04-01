@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
     if (
       user.branchName === 'kapelanka' ||
       user.branchName === 'balicka' ||
+      user.branchName === 'wroclaw' ||
       user.branchName === 'bulwar'
     ) {
       // comparing the password
