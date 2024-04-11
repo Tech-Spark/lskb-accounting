@@ -9,6 +9,7 @@ export async function POST(request: NextRequest) {
   let kapId = '30347';
   let balId = '30149';
   let bulId = '30001';
+  let wrocId = '51163';
   let max = 5000;
   let min = 1000;
   let pinCode = Math.floor(Math.random() * (max - min + 1) + min);
@@ -45,7 +46,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (branchCode == kapId || branchCode == balId || branchCode == bulId) {
+    if (
+      branchCode == kapId ||
+      branchCode == balId ||
+      branchCode == bulId ||
+      branchCode == wrocId
+    ) {
       const lowerText = username.toLowerCase();
       const lowerTextBranchN = branchName.toLowerCase();
 
