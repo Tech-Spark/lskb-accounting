@@ -85,6 +85,7 @@ export default function LoginPage() {
             <option value="tarick">Tarick</option>
             <option value="fazlur">Fazlur</option>
             <option value="nasir">Nasir</option>
+            <option value="fahadul">Fahadul</option>
           </select>
         </div>
         <div className="py-2 mb-4">
