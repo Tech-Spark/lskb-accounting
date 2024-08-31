@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
   }
   if (
     (branchName === 'kapelanka' &&
-      (Input_by === 'asiqul' || Input_by === 'nasir')) ||
+      (Input_by === 'asiqul' || Input_by === 'rokon')) ||
     (branchName === 'balicka' &&
       (Input_by === 'fahadul' ||
         Input_by === 'tarick' ||
