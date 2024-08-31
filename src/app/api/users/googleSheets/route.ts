@@ -52,7 +52,9 @@ export async function POST(req: NextRequest) {
     (branchName === 'kapelanka' &&
       (Input_by === 'asiqul' || Input_by === 'nasir')) ||
     (branchName === 'balicka' &&
-      (Input_by === 'rokon' || Input_by === 'shoel' || Input_by === 'nasir')) ||
+      (Input_by === 'fahadul' ||
+        Input_by === 'tarick' ||
+        Input_by === 'nasir')) ||
     (branchName === 'wroclaw' &&
       (Input_by === 'fazlur' || Input_by === 'nasir')) ||
     (branchName === 'bulwar' &&
